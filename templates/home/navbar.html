@@ -1,0 +1,129 @@
+<!-- Header -->
+<header class="header">
+  <div class="container">
+    <div class="header-content">
+      <!-- Logo -->
+      <div class="logo">
+        <a href="{% url 'home' %}">
+          <h1><span>Blogger's</span> Haven</h1>
+        </a>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="nav">
+        <ul>
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="{% url 'categories' %}">Categories</a></li>
+          <li><a href="{% url 'write' %}">Write</a></li>
+        </ul>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <!-- Theme toggle button -->
+        <button
+          class="theme-toggle"
+          id="theme-toggle"
+          aria-label="Toggle dark mode"
+        >
+          <i id="theme-icon" class="fas fa-moon"></i>
+        </button>
+
+        <!-- Auth Buttons or User Dropdown -->
+        {% if user.is_authenticated %}
+        <div class="user-dropdown">
+          <button class="profile-btn" onclick="toggleDropdown()">
+            <img
+              src="https://ui-avatars.com/api/?name={{ user.username }}&background=random"
+              alt="Profile"
+              class="profile-pic"
+            />
+          </button>
+          <div class="dropdown-content" id="profile-dropdown">
+            <span>{{ user.username }}</span>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'logout' %}">Logout</a>
+          </div>
+        </div>
+        {% else %}
+        <div class="auth-buttons" id="auth-buttons">
+          <a href="{% url 'login' %}">
+            <button class="btn btn-outline" id="login-btn">Log in</button>
+          </a>
+          <a href="{% url 'signup' %}">
+            <button class="btn btn-primary" id="signup-btn">Sign up</button>
+          </a>
+        </div>
+        {% endif %}
+
+        <!-- Mobile menu toggle -->
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation -->
+  <div class="mobile-nav hidden" id="mobile-nav">
+    <ul>
+      <li><a href="{% url 'home' %}" class="active">Home</a></li>
+      <li><a href="{% url 'categories' %}">Categories</a></li>
+      <li><a href="{% url 'write' %}">Write</a></li>
+      {% if user.is_authenticated %}
+      <div class="user-dropdown">
+        <button class="profile-btn" onclick="toggleDropdown()">
+          <img
+            src="https://ui-avatars.com/api/?name={{ user.username }}&background=random"
+            alt="Profile"
+            class="profile-pic"
+          />
+          <span class="user-name">{{ user.username }}</span>
+          <i class="fas fa-chevron-down dropdown-arrow"></i>
+        </button>
+        <div class="dropdown-content" id="profile-dropdown">
+          <div class="dropdown-header">{{ user.username }}</div>
+          <div class="dropdown-divider"></div>
+          <a href="{% url 'dashboard' %}" class="dropdown-item">
+            <i class="fas fa-tachometer-alt"></i>
+            Dashboard
+          </a>
+          <a href="{% url 'logout' %}" class="dropdown-item">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+          </a>
+        </div>
+      </div>
+      {% endif %}
+    </ul>
+  </div>
+</header>
+
+<script>
+  function toggleDropdown() {
+    const dropdown = document.getElementById("profile-dropdown");
+    const userDropdown = document.querySelector(".user-dropdown");
+
+    if (dropdown.style.display === "block") {
+      dropdown.style.display = "none";
+      userDropdown.classList.remove("active");
+    } else {
+      dropdown.style.display = "block";
+      userDropdown.classList.add("active");
+    }
+  }
+
+  // Close dropdown when clicking outside
+  document.addEventListener("click", function (event) {
+    const dropdown = document.getElementById("profile-dropdown");
+    const profileBtn = document.querySelector(".profile-btn");
+
+    if (
+      !profileBtn.contains(event.target) &&
+      !dropdown.contains(event.target)
+    ) {
+      dropdown.style.display = "none";
+      document.querySelector(".user-dropdown").classList.remove("active");
+    }
+  });
+</script>

@@ -1,0 +1,124 @@
+<!-- dashboard.html -->
+{% extends 'home/base.html' %} {% block content %}
+<div class="dashboard-content">
+  <div class="dashboard-header">
+    <h2>Welcome, {{ user.first_name|default:user.username }}!</h2>
+    <p class="dashboard-subtitle">Your Account Dashboard</p>
+  </div>
+
+  <div class="user-profile-card">
+    <div class="profile-badge">
+      <img src="/static/images/user_img.png" alt="Profile Picture" />
+    </div>
+    <div class="profile-badge">
+      {{ user.first_name|first|upper }}{{ user.last_name|first|upper }}
+    </div>
+
+    <div class="profile-info">
+      <h3>{{ user.get_full_name|default:user.username }}</h3>
+      <p class="user-email">{{ user.email }}</p>
+      <p class="user-meta">Username: {{ user.username }}</p>
+
+      <div class="profile-actions">
+        <a href="#" class="profile-btn">Edit Profile</a>
+        <a href="#" class="profile-btn">Account Settings</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Dashboard Specific Styles */
+  .dashboard-content {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  .dashboard-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .dashboard-header h2 {
+    color: var(--text-color);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .dashboard-subtitle {
+    color: var(--text-light);
+    font-size: 1rem;
+  }
+
+  .user-profile-card {
+    background: var(--bg-color);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 2rem;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+  }
+
+  .profile-badge {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .profile-badge img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .profile-info {
+    flex-grow: 1;
+  }
+
+  .profile-info h3 {
+    color: var(--text-color);
+    margin-bottom: 0.25rem;
+    font-size: 1.3rem;
+  }
+
+  .user-email {
+    color: var(--text-light);
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .user-meta {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .profile-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .profile-btn {
+    padding: 0.5rem 1rem;
+    background: var(--bg-light);
+    color: var(--text-color);
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    border: 1px solid var(--border-color);
+  }
+
+  .profile-btn:hover {
+    background: var(--primary-color);
+    color: white;
+  }
+</style>
+{% endblock %}

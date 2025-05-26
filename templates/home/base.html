@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Blogger's Haven{% endblock %}</title>
+    <meta
+      name="description"
+      content="A platform simplifying blogging for individuals and businesses"
+    />
+    <meta name="author" content="Blogger's Haven" />
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div id="root">
+      <!-- Navbar -->
+      {% include 'home/navbar.html' %}
+
+      <!--Page-specific content block -->
+      {% block content %}{% endblock %}
+
+      <!-- ✅ Footer -->
+      {% include 'home/footer.html' %}
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>

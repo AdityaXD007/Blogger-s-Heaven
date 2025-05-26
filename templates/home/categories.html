@@ -1,0 +1,249 @@
+{% extends 'home/base.html' %} {% load static %} {% block content %}
+<div class="container">
+  <h1 class="page-title">Blog Categories</h1>
+
+  <div class="categories-container">
+    <div class="category-sidebar">
+      <h3>Categories</h3>
+      <ul class="category-list" id="categoryList">
+        <li class="category-item active" data-category="all">All Posts</li>
+        <li class="category-item" data-category="Technology">Technology</li>
+        <li class="category-item" data-category="Business">Business</li>
+        <li class="category-item" data-category="Lifestyle">Lifestyle</li>
+        <li class="category-item" data-category="Travel">Travel</li>
+        <li class="category-item" data-category="Food">Food</li>
+        <li class="category-item" data-category="Health">Health</li>
+        <li class="category-item" data-category="Education">Education</li>
+        <li class="category-item" data-category="Entertainment">
+          Entertainment
+        </li>
+      </ul>
+    </div>
+
+    <div class="posts-grid" id="postsGrid">
+      <!-- Posts will be dynamically loaded here -->
+    </div>
+  </div>
+</div>
+<style>
+  /* Categories Page */
+  .page-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: var(--text-color);
+  }
+
+  /* Layout */
+  .categories-container {
+    display: flex;
+    gap: 30px;
+  }
+
+  /* Sidebar */
+  .category-sidebar {
+    flex: 0 0 220px;
+    background: var(--bg-light);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    color: var(--text-color);
+  }
+
+  .category-sidebar h3 {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 5px;
+  }
+
+  /* Category List */
+  .category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .category-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    transition: background 0.3s, color 0.3s;
+    background: transparent;
+    color: var(--text-color);
+  }
+
+  .category-item:hover {
+    background: var(--primary-hover);
+    color: white;
+  }
+
+  .category-item.active {
+    background: var(--primary-color);
+    color: white;
+  }
+
+  /* Posts Grid */
+  .posts-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  /* Post Card */
+  .post-card {
+    background: var(--bg-color);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease;
+    color: var(--text-color);
+  }
+
+  .post-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+  }
+
+  .post-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--text-color);
+  }
+
+  .post-category {
+    font-size: 0.9rem;
+    background: var(--primary-color);
+    padding: 3px 8px;
+    border-radius: 6px;
+    color: white;
+  }
+
+  .post-content {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    margin-bottom: 15px;
+  }
+
+  .post-meta {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .post-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+
+  .no-posts {
+    text-align: center;
+    grid-column: 1 / -1;
+    background: var(--bg-light);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    color: var(--text-color);
+    transition: var(--transition);
+  }
+</style>
+<script>
+  class PostManager {
+      constructor() {
+          this.currentCategory = 'all';
+          this.posts = [];
+          this.init();
+      }
+
+      init() {
+          this.bindEvents();
+          this.loadPosts();
+      }
+
+      bindEvents() {
+          const categoryItems = document.querySelectorAll('.category-item');
+          categoryItems.forEach(item => {
+              item.addEventListener('click', (e) => this.filterByCategory(e));
+          });
+      }
+
+      loadPosts() {
+          // Get posts passed from Django view context
+          this.posts = {{ posts|safe }} || [];
+          this.renderPosts();
+      }
+
+      filterByCategory(e) {
+          const category = e.target.dataset.category;
+          this.currentCategory = category;
+
+          // Update active category
+          document.querySelectorAll('.category-item').forEach(item => {
+              item.classList.remove('active');
+          });
+          e.target.classList.add('active');
+
+          this.renderPosts();
+      }
+
+      renderPosts() {
+          const postsGrid = document.getElementById('postsGrid');
+          const filteredPosts = this.currentCategory === 'all'
+              ? this.posts
+              : this.posts.filter(post => post.category === this.currentCategory);
+
+          if (filteredPosts.length === 0) {
+              postsGrid.innerHTML = `
+                  <div class="no-posts">
+                      <h3>No posts found</h3>
+                      <p>Be the first to create a post in this category!</p>
+                  </div>
+              `;
+              return;
+          }
+
+          postsGrid.innerHTML = filteredPosts.map(post => `
+              <div class="post-card">
+                <div class="post-header">
+                  <h3 class="post-title">${this.escapeHtml(post.title)}</h3>
+                  <span class="post-category">${post.category}</span>
+                </div>
+                <div class="post-image">
+                  ${post.image_url ? `<img src="${post.image_url}" alt="Post Image" />` : ''}
+                </div>
+                <div class="post-content">
+                  ${this.escapeHtml(post.content.substring(0, 150))}${post.content.length > 150 ? '...' : ''}
+                </div>
+                <div class="post-meta">
+                  <span class="post-author">By ${this.escapeHtml(post.author)}</span>
+                  <span class="post-date">${post.date}</span>
+                </div>
+              </div>
+            `).join('');
+          }
+
+      escapeHtml(text) {
+          const div = document.createElement('div');
+          div.textContent = text;
+          return div.innerHTML;
+      }
+  }
+
+  // Initialize when page loads
+  document.addEventListener('DOMContentLoaded', () => {
+      new PostManager();
+  });
+</script>
+{% endblock %}

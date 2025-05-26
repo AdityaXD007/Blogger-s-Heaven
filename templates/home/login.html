@@ -1,0 +1,54 @@
+{% extends 'home/base.html' %} {% block content %}
+<style>
+  .login-box {
+    background: white;
+    padding: 30px;
+    margin: 50px auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    height: 400px;
+  }
+  h2 {
+    text-align: center;
+  }
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  button {
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .error {
+    color: red;
+  }
+</style>
+
+<div class="login-box">
+  <h2>Login</h2>
+  {% if messages %} {% for message in messages %}
+  <div class="error">{{ message }}</div>
+  {% endfor %} {% endif %}
+  <form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}" />
+    <input type="text" name="username" placeholder="Username" required />
+    <input type="password" name="password" placeholder="Password" required />
+    <button type="submit" class="btn">Login</button>
+  </form>
+
+  <p style="text-align: center; margin-top: 10px">
+    Don't have an account? <a href="{% url 'signup' %}">Signup</a>
+  </p>
+  <p style="text-align: center; margin-top: 10px">
+    Forget Password? <a href="{% url 'password_reset' %}">Reset Password</a>
+  </p>
+</div>
+{%endblock%}

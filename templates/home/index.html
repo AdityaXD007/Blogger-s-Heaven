@@ -1,0 +1,323 @@
+{% extends 'home/base.html' %} {% block content %}
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <h1>Welcome to Blogger's Haven</h1>
+      <p>
+        Discover the latest trends in technology, lifestyle, travel, and more
+      </p>
+      <button class="cta-btn">Start Reading</button>
+    </div>
+  </div>
+</section>
+<!-- Category Filter -->
+<section class="category-filter">
+  <div class="container">
+    <div class="filter-header">
+      <h2>Discover stories</h2>
+      <div class="filter-controls">
+        <button class="filter-btn active" data-category="all">All</button>
+        <button class="filter-btn" data-category="technology">
+          Technology
+        </button>
+        <button class="filter-btn" data-category="travel">Travel</button>
+        <button class="filter-btn" data-category="food">Food</button>
+        <button class="filter-btn" data-category="lifestyle">Lifestyle</button>
+        <button class="filter-btn" data-category="business">Business</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Blog Posts -->
+<section class="blog-posts">
+  <div class="container">
+    <div class="posts-grid" id="postsGrid">
+      <!-- Technology Posts -->
+      <article class="post-card" data-category="technology">
+        <div class="post-image">
+          <img
+            src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400"
+            alt="AI Technology"
+          />
+          <span class="post-category">Technology</span>
+        </div>
+        <div class="post-content">
+          <h3>The Future of Artificial Intelligence in 2024</h3>
+          <p>
+            Exploring how AI is transforming industries and reshaping our daily
+            lives with breakthrough innovations.
+          </p>
+          <div class="post-meta">
+            <span class="post-date">Dec 15, 2024</span>
+            <span class="post-author">John Doe</span>
+          </div>
+          <div class="post-actions">
+            <button class="like-btn" onclick="toggleLike(this)">
+              <span class="heart">♡</span>
+              <span class="like-count">24</span>
+            </button>
+            <button class="comment-btn" onclick="toggleComments(this)">
+              💬 <span class="comment-count">8</span>
+            </button>
+          </div>
+          <div class="comments-section" style="display: none">
+            <div class="comments-list">
+              <div class="comment">
+                <strong>Alice:</strong> Great insights on AI trends!
+              </div>
+              <div class="comment">
+                <strong>Bob:</strong> Very informative article.
+              </div>
+            </div>
+            <div class="comment-form">
+              <input
+                type="text"
+                placeholder="Add a comment..."
+                class="comment-input"
+              />
+              <button onclick="addComment(this)">Post</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Travel Posts -->
+      <article class="post-card" data-category="travel">
+        <div class="post-image">
+          <img
+            src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400"
+            alt="Travel"
+          />
+          <span class="post-category">Travel</span>
+        </div>
+        <div class="post-content">
+          <h3>Hidden Gems: 10 Unexplored Destinations</h3>
+          <p>
+            Discover breathtaking locations off the beaten path that offer
+            unique experiences and unforgettable memories.
+          </p>
+          <div class="post-meta">
+            <span class="post-date">Dec 12, 2024</span>
+            <span class="post-author">Sarah Wilson</span>
+          </div>
+          <div class="post-actions">
+            <button class="like-btn" onclick="toggleLike(this)">
+              <span class="heart">♡</span>
+              <span class="like-count">42</span>
+            </button>
+            <button class="comment-btn" onclick="toggleComments(this)">
+              💬 <span class="comment-count">15</span>
+            </button>
+          </div>
+          <div class="comments-section" style="display: none">
+            <div class="comments-list">
+              <div class="comment">
+                <strong>Explorer:</strong> Adding these to my bucket list!
+              </div>
+            </div>
+            <div class="comment-form">
+              <input
+                type="text"
+                placeholder="Add a comment..."
+                class="comment-input"
+              />
+              <button onclick="addComment(this)">Post</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Food Posts -->
+      <article class="post-card" data-category="food">
+        <div class="post-image">
+          <img
+            src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400"
+            alt="Food"
+          />
+          <span class="post-category">Food</span>
+        </div>
+        <div class="post-content">
+          <h3>The Art of Modern Cooking: Fusion Cuisine</h3>
+          <p>
+            Learn how chefs are blending traditional techniques with modern
+            innovation to create extraordinary culinary experiences.
+          </p>
+          <div class="post-meta">
+            <span class="post-date">Dec 10, 2024</span>
+            <span class="post-author">Chef Marco</span>
+          </div>
+          <div class="post-actions">
+            <button class="like-btn" onclick="toggleLike(this)">
+              <span class="heart">♡</span>
+              <span class="like-count">67</span>
+            </button>
+            <button class="comment-btn" onclick="toggleComments(this)">
+              💬 <span class="comment-count">23</span>
+            </button>
+          </div>
+          <div class="comments-section" style="display: none">
+            <div class="comments-list">
+              <div class="comment">
+                <strong>Foodie:</strong> Amazing recipes! Can't wait to try
+                them.
+              </div>
+            </div>
+            <div class="comment-form">
+              <input
+                type="text"
+                placeholder="Add a comment..."
+                class="comment-input"
+              />
+              <button onclick="addComment(this)">Post</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Lifestyle Posts -->
+      <article class="post-card" data-category="lifestyle">
+        <div class="post-image">
+          <img
+            src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400"
+            alt="Lifestyle"
+          />
+          <span class="post-category">Lifestyle</span>
+        </div>
+        <div class="post-content">
+          <h3>Mindfulness in the Digital Age</h3>
+          <p>
+            Finding balance and peace in our hyper-connected world through
+            mindful practices and digital wellness.
+          </p>
+          <div class="post-meta">
+            <span class="post-date">Dec 8, 2024</span>
+            <span class="post-author">Emma Green</span>
+          </div>
+          <div class="post-actions">
+            <button class="like-btn" onclick="toggleLike(this)">
+              <span class="heart">♡</span>
+              <span class="like-count">89</span>
+            </button>
+            <button class="comment-btn" onclick="toggleComments(this)">
+              💬 <span class="comment-count">31</span>
+            </button>
+          </div>
+          <div class="comments-section" style="display: none">
+            <div class="comments-list">
+              <div class="comment">
+                <strong>Zen:</strong> This really helped me disconnect and
+                recharge.
+              </div>
+            </div>
+            <div class="comment-form">
+              <input
+                type="text"
+                placeholder="Add a comment..."
+                class="comment-input"
+              />
+              <button onclick="addComment(this)">Post</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Business Posts -->
+      <article class="post-card" data-category="business">
+        <div class="post-image">
+          <img
+            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400"
+            alt="Business"
+          />
+          <span class="post-category">Business</span>
+        </div>
+        <div class="post-content">
+          <h3>Startup Success: Lessons from Unicorn Companies</h3>
+          <p>
+            Analyzing the strategies and decisions that led billion-dollar
+            startups to achieve remarkable growth and market dominance.
+          </p>
+          <div class="post-meta">
+            <span class="post-date">Dec 5, 2024</span>
+            <span class="post-author">David Chen</span>
+          </div>
+          <div class="post-actions">
+            <button class="like-btn" onclick="toggleLike(this)">
+              <span class="heart">♡</span>
+              <span class="like-count">156</span>
+            </button>
+            <button class="comment-btn" onclick="toggleComments(this)">
+              💬 <span class="comment-count">45</span>
+            </button>
+          </div>
+          <div class="comments-section" style="display: none">
+            <div class="comments-list">
+              <div class="comment">
+                <strong>Entrepreneur:</strong> Valuable insights for my startup
+                journey!
+              </div>
+            </div>
+            <div class="comment-form">
+              <input
+                type="text"
+                placeholder="Add a comment..."
+                class="comment-input"
+              />
+              <button onclick="addComment(this)">Post</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- More Technology Posts -->
+      <article class="post-card" data-category="technology">
+        <div class="post-image">
+          <img
+            src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400"
+            alt="Technology"
+          />
+          <span class="post-category">Technology</span>
+        </div>
+        <div class="post-content">
+          <h3>Web Development Trends for 2024</h3>
+          <p>
+            Exploring the latest frameworks, tools, and techniques shaping the
+            future of web development.
+          </p>
+          <div class="post-meta">
+            <span class="post-date">Dec 3, 2024</span>
+            <span class="post-author">Alex Kumar</span>
+          </div>
+          <div class="post-actions">
+            <button class="like-btn" onclick="toggleLike(this)">
+              <span class="heart">♡</span>
+              <span class="like-count">73</span>
+            </button>
+            <button class="comment-btn" onclick="toggleComments(this)">
+              💬 <span class="comment-count">19</span>
+            </button>
+          </div>
+          <div class="comments-section" style="display: none">
+            <div class="comments-list">
+              <div class="comment">
+                <strong>Developer:</strong> Great overview of modern web tech!
+              </div>
+            </div>
+            <div class="comment-form">
+              <input
+                type="text"
+                placeholder="Add a comment..."
+                class="comment-input"
+              />
+              <button onclick="addComment(this)">Post</button>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+<style></style>
+
+{% endblock %}

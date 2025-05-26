@@ -1,0 +1,56 @@
+{% extends 'home/base.html' %} {% block content %}
+
+<div class="signup-box">
+  <h2>Signup</h2>
+  {% if messages %} {% for message in messages %}
+  <div class="error">{{ message }}</div>
+  {% endfor %} {% endif %}
+  <form method="POST">
+    {% csrf_token %}
+    <input type="text" name="username" placeholder="Username" required />
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="password" name="password1" placeholder="Password" required />
+    <input
+      type="password"
+      name="password2"
+      placeholder="Confirm Password"
+      required
+    />
+    <button type="submit" class="btn">Signup</button>
+  </form>
+  <p style="text-align: center; margin-top: 10px">
+    Already have an account? <a href="{% url 'login' %}">Login</a>
+  </p>
+</div>
+<style>
+  .signup-box {
+    background: white;
+    padding: 30px;
+    margin: 50px auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    height: 450px;
+  }
+  h2 {
+    text-align: center;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  button {
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .error {
+    color: red;
+  }
+</style>
+{% endblock %}
