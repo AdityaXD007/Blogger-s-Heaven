@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# Django static/media
+static/
+media/
+
+# Ignore local settings
+.env
+
+# VS Code
+.vscode/
+
+# MacOS
+.DS_Store
+
+# Ignore virtual environment
+venv/
+
+# Optional: comment out this line to allow Render to serve staticfiles
+# staticfiles/
